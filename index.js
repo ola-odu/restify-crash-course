@@ -1,10 +1,15 @@
 const restify = require('restify')
-const http = require('http')
 const config = require('config')
+const http = require('http')
+//const config = require('config')
 
 const server = http.createServer()
+//const app = restify()
 
-const port = process.env.PORT || 5000
+const port = config.get('port')
+
+const connectDB = require('./src/db/db')
+connectDB()
 
 
 server.listen(port,() => {
