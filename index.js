@@ -1,17 +1,36 @@
-const restify = require('restify')
-const config = require('config')
-const http = require('http')
-//const config = require('config')
+const restify = require("restify");
+const config = require("config");
+const mongoose = require("mongoose");
 
-const server = http.createServer()
-//const app = restify()
+//@Create server with restify
+const server = restify.createServer();
 
-const port = config.get('port')
+//@Middleware
+server.use(restify.plugins.bodyParser());
 
-const connectDB = require('./src/db/db')
-connectDB()
+//@DB initialization
+const connectDB = require("./src/db/db");
 
+//@Routes
+const customerRoutes = require("./src/routes/customers");
+const userRoutes = require("./src/routes/user");
 
-server.listen(port,() => {
-    console.log(`Server successfully started on port: ${port}`)
-}) 
+//@Listening port
+const port = config.get("port");
+
+server.listen(port, () => {
+  connectDB();
+  console.log(`Server successfully started on port: ${port}`);
+});
+
+// Check for error/success after connecting to the db
+const db = mongoose.connection;
+
+db.on("error", (err) => {
+  console.log(err);
+});
+
+db.once("open", () => {
+  require("./src/routes/customers")(server);
+  console.log("Meow... I dey work!");
+});
