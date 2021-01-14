@@ -23,7 +23,7 @@ server.listen(port, () => {
   console.log(`Server successfully started on port: ${port}`);
 });
 
-// Check for error/success after connecting to the db
+// Check for error/success after connecting to the
 const db = mongoose.connection;
 
 db.on("error", (err) => {
