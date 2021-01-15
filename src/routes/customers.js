@@ -2,6 +2,7 @@ const errors = require("restify-errors");
 const Customers = require("../models/customer");
 
 module.exports = (server) => {
+  console.log("Customer routes works");
   //@Create Customers
   server.post("/customer", async (req, res, next) => {
     const customer = new Customers(req.body);

@@ -31,6 +31,8 @@ db.on("error", (err) => {
 });
 
 db.once("open", () => {
-  require("./src/routes/customers")(server);
+  customerRoutes(server);
+  userRoutes(server);
+
   console.log("Meow... I dey work!");
 });
